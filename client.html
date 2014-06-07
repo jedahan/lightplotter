@@ -1,0 +1,45 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//cdn.techpines.io/jquery.event.drag-2.0.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    App = {}
+    App.socket = io.connect()
+
+    // Draw Function
+    App.draw = function(data) {
+        if (data.type == "dragstart") {
+            App.ctx.beginPath()
+            App.ctx.moveTo(data.x,data.y)
+        } else if (data.type == "drag") {
+            App.ctx.lineTo(data.x,data.y)
+            App.ctx.stroke()
+        } else {
+            App.ctx.stroke()
+            App.ctx.closePath()
+        }
+    }
+
+    // Draw from other sockets
+    App.socket.on('draw', App.draw);
+
+    // Bind click and drag events to drawing and sockets.
+    $(function() {
+        App.ctx = $('canvas')[0].getContext("2d");
+        App.ctx.strokeStyle = "rgba(255,0,0,0.1)";
+        $('canvas').on('drag dragstart dragend', function(e) {
+            offset = $(this).offset()
+            data = {
+                x: (e.clientX - offset.left),
+                y: (e.clientY - offset.top),
+                type: e.handleObj.type
+            }
+            App.draw(data) // Draw yourself.
+            App.socket.emit('drawClick', data) // Broadcast draw.
+        })
+        $('button').on('click', function(e) {
+          App.socket.emit('draw')
+        })
+    })
+</script>
+<canvas width="750px" height="500px" style="margin: 0 auto; border:1px solid #000000`"></canvas>
+<button id="draw">draw</button>

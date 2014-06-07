@@ -1,26 +1,9 @@
 {
 	"author": "Jonathan Dahan <jonathan@jonathan.is>",
-	"name": "pigpio.js",
 	"description": "A node.js library for the pigpio daemon, allowing fast, powerful PWM control of the Raspberry Pi pins",
 	"version": "0.0.1",
-	"main": "lib/pigpio",
-	"scripts": {
-    "build": "coffee --bare --js < src/pigpio/index.coffee > lib/pigpio/index.js",
-    "prepublish": "coffee --bare --js < src/pigpio/index.coffee > lib/pigpio/index.js",
-    "postpublish": "rm -rf lib"
-  },
-	"repository": {
-		"type": "git",
-		"url": "git@github.com:jedahan/pigpio.js.git"
-	},
-	"homepage": "https://github.com/jedahan/pigpio.js",
-	"bugs": {
-		"url": "https://github.com/sarfata/pigpio.js/issues"
-	},
 	"licenses": [
-    { "type": "MIT",
-      "url": "http://github.com/jedahan/pigpio.js/blob/master/MIT-LICENSE"
+    { "type": "MIT"
     }
-  ],
-	"tags": ["raspberry", "pi", "pwm", "gpio"]
+  ]
 }
